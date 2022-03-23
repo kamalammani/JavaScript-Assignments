@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+     <!-- Metadat -->
+     <meta charset="UTF-8">
+     <meta name="JS-Assignment 1" content="HTML-Forms,Javascript">
+     
+     <!-- Title tag -->
+     <title>JS1</title>
+     
+     <!-- Script tag -->
+     <script type = "text/javascript">
+         
+         // calculation() function - handles error and do required operations
+	 function calcultion()
+               {
+                   
+                   // input values from HTML forms 
+                   var n1 = parseFloat(document.getElementById('n1').value);
+                   var n2 = parseFloat(document.getElementById('n2').value); 
+                   var operator = document.getElementById('operator').value;
+                   
+                   // A seperate variable for error commenting
+                   var message = document.getElementById("error comment");
+                       
+                        // Exception handling - Try , Catch
+                        try
+                           {
+                              // Checking input is integer or not 
+                              if(!isNaN(n1)&&!isNaN(n2)) 
+                                 {
+                                    switch(operator) 
+                                     {
+                                       case '+':
+                                          doAddition(n1,n2);
+                                          break;
+
+                                       case '-':
+                                          doSubtraction(n1,n2);
+                                          break;
+
+                                       case '*':
+                                          doMultiplication(n1,n2);
+                                          break;
+
+                                       case '/':
+                                          doDivision(n1,n2,message);
+                                          break;
+
+                                       case '%':
+                                          doModulus(n1,n2);
+                                          break;
+                                       }
+                                 }
+                               else
+                                 {
+                                     // If input is not integer Throwing error
+                                     throw "Invalid input";
+                                 }     
+                           }
+                        //catcing error
+                        catch(err)
+                           {
+                               message.innerHTML = err; 
+                           }
+                   
+                   return false;
+               }
+
+        // Respective functions for required opeartions
+        function doAddition(x,y)
+               {
+                  document.getElementById('result').value = x+y;
+               }
+        function doSubtraction(x,y)
+               {
+                  document.getElementById('result').value = x-y;
+               }
+        function doMultiplication(x,y)
+               {
+                  document.getElementById('result').value = x*y;
+               }
+        function doDivision(x,y,message)
+               {
+                  try
+                   {
+                      // Special handle for number divide by zero
+                      if(y!=0)
+                         {
+                             document.getElementById('result').value = x/y;
+                         }
+                      else
+                         {
+                             throw "Invalid input";
+                         }
+                    }
+                    catch(err)
+                    {
+                         message.innerHTML = err; 
+                    }
+               }
+        function doModulus(x,y)
+               { 
+                  document.getElementById('result').value = x%y;    
+               }
+     </script>
+  </head>
+
+  <body>
+     
+     <!-- HTML form with inputs and answer buttons -->
+     <form name = "Calculator">
+        
+        <!-- Required Fields in Form -->
+     
+        <label>Input1:</label><br/><input type = "text" id = "n1"><br/><br/>
+
+        <label>Input2:</label><br/><input type = "text" id = "n2"><br/><br/>
+         
+        
+        <label>Operators: </label><br/><select id = "operator">
+                                              <option value = "+">+</option>
+                                              <option value = "-">-</option>
+                                              <option value = "*">*</option>
+                                              <option value = "%">%</option>
+                                              <option value = "/">/</option>
+                                        </select><br/><br/>
+        
+        <label>Result :</label><br/><input type = "text" id="result">
+        <button onclick="return calcultion();">answer</button>                                      
+     
+     </form>
+     
+     <!-- Error commenting -->
+     <p id="error comment"></p>
+
+  </body>
+ 
+</html>
+
+
+
