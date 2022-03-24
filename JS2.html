@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+     <!-- Metadat -->
+     <meta charset="UTF-8">
+     <meta name="JS-Assignment 2" content="HTML-Forms,Javascript,Reference of Assignment 1">
+     
+     <!-- Title tag -->
+     <title>JS2</title>
+     
+     <!-- Script tag -->
+     <script type = "text/javascript">
+        
+         // calculation() function - handles error and do required operations 
+         function calcultion()
+               {
+                   
+                   // Assigning const for n1 and n2 , "n1 and n1" will never change
+                   const n1 = parseFloat(document.getElementById('n1').value);
+                   const n2 = parseFloat(document.getElementById('n2').value);
+
+                   // using let, used at function scope 
+                   let operator = document.getElementById('operator').value;
+                   let message = document.getElementById("error comment");
+                   let format1 = "Error: ";
+                   let format = format1.bold(); // Bold text - As per Question format
+                   
+   
+                  // Exception handling - Try , Catch
+                        try
+                           {
+                              // Checking input is integer is not 
+                              if(!isNaN(n1)&&!isNaN(n2)) 
+                                 {
+                                  
+                                   // Checking Safe Integer
+                                    if(Number.isSafeInteger(n1)&&Number.isSafeInteger(n2))
+                                       {
+                                          switch(operator) 
+                                            {
+                                             case '+':
+                                                 doAddition(n1,n2);
+                                                 break;
+
+                                             case '-':
+                                                 doSubtraction(n1,n2);
+                                                 break;
+
+                                             case '*':
+                                                 doMultiplication(n1,n2);
+                                                 break;
+   
+                                             case '/':
+                                                 doDivision(n1,n2,message,format);
+                                                 break;
+   
+                                             case '%':
+                                                 doModulus(n1,n2);
+                                                 break;
+                                             }
+                                         }
+                                     else
+                                         {
+                                             // Throwing error for not a safety integer
+                                             throw "Input is Not a Safe Integer";
+                                         }
+                                 }
+                               else
+                                 {
+                                     // Throwing error for not a integer
+                                     throw "Input is Not an Integer";
+                                 }     
+                           }
+                        //catcing error
+                        catch(err)
+                           {
+                                // catching error with help of template literal
+                                message.innerHTML = ` ${format} ${err} `;
+                           }
+                   
+                   return false;
+               }
+
+        // Seperate functions for required opeartions
+        function doAddition(x,y)
+               {
+                  document.getElementById('result').value = x+y;
+               }
+        function doSubtraction(x,y)
+               {
+                  document.getElementById('result').value = x-y;
+               }
+        function doMultiplication(x,y)
+               {
+                  document.getElementById('result').value = x*y;
+               }
+        function doDivision(x,y,message,format)
+               {
+                  try
+                   {
+                      // Special handle for number divide by zero
+                      if(y!=0)
+                         {
+                             document.getElementById('result').value = x/y;
+                         }
+                      else
+                         {
+                             // Template literal
+                             throw "Number cannot divided by zero";
+                         }
+                    }
+                    catch(err)
+                    {
+                         message.innerHTML = ` ${format} ${err} `; 
+                    }
+               }
+        function doModulus(x,y)
+               { 
+                  document.getElementById('result').value = x%y;    
+               }
+     </script>
+  </head>
+
+  <body>
+     
+     <!-- HTML form with inputs and answer buttons -->
+     <form name = "Calculator">
+        
+        <!-- Required Fields in Form -->
+     
+        <label>Input1:</label><br/><input type = "text" id = "n1"><br/><br/>
+
+        <label>Input2:</label><br/><input type = "text" id = "n2"><br/><br/>
+         
+        
+        <label>Operators: </label><br/><select id = "operator">
+                                              <option value = "+">+</option>
+                                              <option value = "-">-</option>
+                                              <option value = "*">*</option>
+                                              <option value = "%">%</option>
+                                              <option value = "/">/</option>
+                                        </select><br/><br/>
+        
+        <label>Result :</label><br/><input type = "text" id="result">
+        <button onclick="return calcultion();">answer</button>                                      
+     
+     </form>
+     
+     <!-- Error commenting -->
+     <p id="error comment"></p>
+
+  </body>
+ 
+</html>
+
